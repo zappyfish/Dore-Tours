@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vanderbilt_buildings">
+        <item>Featheringill</item>
+        <item>Wilson</item>
+        <item>Buttrick</item>
+        <item>Stevenson</item>
+    </string-array>
+</resources>

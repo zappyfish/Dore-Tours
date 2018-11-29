@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dore-tours-vandy",
+  "private_key_id": "d94b025a43ae117da89c0b2ac02cb53ca7a31929",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCSiDP6kocreKBo\njlMm8MkJSlQgXVmbJoZCh76iB4gBU9IfqshqLYKt2ZUwOE3foufIEOUU+ANwOjpL\n3U5Uj06eaFjVsr7+V8XtTkb8K0Gdp5QlsjHy5EpjWmgDhfdEk5WR44C/Uk1vYcu+\n6ujxOBCuOsmzRQ9JIkRt7lLYtg/EcPePNrLbEyaZYS0kmQWzBOcQe6Qb988AAYtp\nPHYfqzqwRM5KrFK/N7Hrc5Bas8rYSsYmbGTqPvR9lKu3V9S4i/piNMX+F9r7R9tt\nNGwcqiwC8S6hMcXwkAaY9RhcowwpZiJmQXGbZvoo8XAR60lXQVLrx7AynIqZTzke\nFwfkUSyFAgMBAAECggEACBKV3n+VD8mI+Mmifho00Ry1rsTFy3zfV6n30CBfF0eh\nY1o6yVKxiNdcVzg63g+w+j4oCLQzKEsk7AoIpzLv710rS7aZvBRk1JKD6Z+OcVuK\nl1sOUmXOTVPtOAh421/QFSX18VRc7L50BZQWejeO/7JAa25qDarkHzRKfyLkkntb\naGnjrkXAFs5OUF5SBJ89u0HhSUHXm9WPl4fczpZP54D3MiWre8mmYNChjjNM5yns\nGLBExiGOiUu6fB33x9/WVYjJCCzuxuUpgRqqxl692I6diageDCLeb4GEzxU3jPBI\nrxJng8b0ixqzxmpLunz/B0GHSOy02Wik1eTiOHzj7wKBgQDEZj6XdVHvdtLuRn3Q\n+mU7EnytapqZjP7tYbSBN3EKwrPTMcXgzjJ+5ojORQjQhCD2RVauiZ/bxpeVc1xf\nvkQr9CqV+GVBw+7QgfsFGCHuqAgJuTnkjUF2ooukJJuz/jJJLzg0GyIsEGWMmP1i\nIvzmoVtEi9GZGeFROjEYtUbGMwKBgQC+/+T92rdeltidnmy37wY+zLWlP99mCqma\nKJx1ozGJmXuo8lZ28XjC9RrOFFS3JkPi6MCGBx3lo4GxjpOyG70sdUN5O9Xphwxw\nC4JM9S4j80BZiIUkjUCyCnsoYSa+3NRd/leDL+afFQTuRua7S1Soru0k9pieCQUF\nYjvu37DaZwKBgC8WmJE1xsRUR/RrIEVXk6fbIdtuQMzp+kEt+No2UbsTvYu4Vko1\nBfRZD5ntAVUFKOYC7+p/Ar3t2nAxrYcjFjM3onI8kQJ4mKyTTX0GMTSIQw0ZxOCg\nYX6xMCvVvyMjoijb0mzjyIiqEb7o+29pFhuxujEwGLvNcbFI83aKGALzAoGBAK6V\nOLrRMMtFFrr8FGQMF6lPdLmXqJudI2nFtT3R7XXY1S+YU3BlR/zsDZRRAR5n26WN\nGm1oE+vTiLjDmj0zHbeFeCdYii7rQnMoEfJGKeaych9kqk6+zmPvMKO4KbJMJ9HC\nqjs/jY3bqKYkKMMKGFgXjKw8u0O4+t3w7NdroDwBAoGAPcpI1RYlvAga76450UL3\nxL38plPs7AeDtAfuK/uTPTvfUJyDh0kQytMhYQbIQWsznQ7VlPLQV5R//LCETAeu\ngNt09PSRu98rN/wKM5JHd8Sdi36FlzHHhT1Q4a87wn3R2fsYNK2BJ6DB67L9EgZ3\nJUOmJkR5YK+wg+3mnyrYnLU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "python-dore-tours@dore-tours-vandy.iam.gserviceaccount.com",
+  "client_id": "101979694598296556745",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/python-dore-tours%40dore-tours-vandy.iam.gserviceaccount.com"
+}

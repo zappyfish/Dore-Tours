@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1039373822265",
+    "firebase_url": "https://dore-tours-vandy.firebaseio.com",
+    "project_id": "dore-tours-vandy",
+    "storage_bucket": "dore-tours-vandy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039373822265:android:27daa0a284812c06",
+        "android_client_info": {
+          "package_name": "com.example.liamkelly.doretours"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039373822265-dvjf7m052787655fcd5ie3q5a4bdgd0u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.liamkelly.doretours",
+            "certificate_hash": "b3db5681b68e6ed753cba0dc098526eaed72afc5"
+          }
+        },
+        {
+          "client_id": "1039373822265-nc6q02iaa30ntkquut28bvukn3gm35l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClH0rYJ0bfuQMr_MeCMsSs7z-OXm6o8tM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039373822265-nc6q02iaa30ntkquut28bvukn3gm35l2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
