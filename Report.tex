@@ -2,6 +2,7 @@
 
 \usepackage{listings}
 \usepackage{color}
+\usepackage{graphicx}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -123,24 +124,45 @@ public Building getBuildingInView(double northMagnitude, double 	eastMagnitude, 
 }
 \end{lstlisting}
 
-However, a significant flaw with this approach is that if the camera were pointed in the direction of a building far away, beyond sight, the phone would still inform the user that they were looking at that building, since the algorithm would keep taking steps in that direction until it hit that building.
+\begin{figure}
+  \includegraphics[width=\linewidth]{report_images/Stevenson.jpg}
+  \caption{The app recognizing Stevenson.}
+  \label{fig:stevenson}
+\end{figure}
 
-A way to correct this is to determine if a building is actually within the image captured by the camera. This can be done with a YOLO detector, or a You-Only-Look-Once detector. This is an objector detection system which uses a neural net to create bounded boxes around objects which it has been trained on.
+\subsection{YOLO Detection of Buildings}
+
+A significant flaw with the GPS-step approach is that if the camera were pointed in the direction of a building far away, beyond sight, the phone would still inform the user that they were looking at that building, since the algorithm would keep taking steps in that direction until it hit that building.
+
+A way to correct this is to determine if a building is actually within the image captured by the camera. This can be done with a YOLO detector, or a You-Only-Look-Once detector. This is an objector detection system which uses a neural net to create bounded boxes around objects which it has been trained on. Using a YOLO detector, the building recognition algorithm could be modified to only run if a building was in the image captured by the camera.
+
+\subsubsection{Collecting Training Data}
+
+To make collecting training data simpler, a pipeline was written which uploads captured images to the cloud. These images were labeled using the GPS-step recognition technique, as the result could be verified by the user before capturing the image and uploading. A script was written which pulled down the images and organized them into directories.
+
+\subsubsection{Training the Neural Net}
+
+Bounding boxes were drawn around the buildings using 
 
 \subsection{Contouring Campuses}
 
+As noted, the algorithms for determining location and what building is in view rely on contours of campus and buildings. These contours defined by vertices which are latitude-longitude pairs. To create contours more easily, a desktop application was written which leverages the Google Maps API. The application lets you search for a campus (e.g. "Vanderbilt University") and will then, if Google finds it, display the campus. There are buttons to zoom in and out and move around. Once a user is satisfied, they can draw contours on the screen with the mouse. These contours are pixels, but will be converted to latitude-longitude pairs using mercator projection. The contours are sampled so as not to create an excessive number of points in a contour, and then they are saved to a database. 
 
+When the Android app starts, it will load available campuses, and upon selecting a campus, its buildings from the database.
+
+\subsection{Future Work}
+
+The intended user of the application is someone unfamiliar with their surroundings. To extend the functionality of this app, a proposed feature is to create augmented reality directions which are drawn on the app to guide a user to a destination building.
+
+A limitation of the application is that because it relies on GPS, it cannot be used for guidance indoors. Another future potential extension of the app would be to create indoor maps that can be navigated through visual-inertial odometry.
 
 \section{Conclusion}
-The conclusion goes here.
+
 
 
 \appendices
 \section{Link to Source Code}
 The source code for this project can be found at https://github.com/zappyfish/Dore-Tours
-
-\section{}
-Appendix two text goes here.
 
 
 \ifCLASSOPTIONcompsoc
@@ -150,7 +172,7 @@ Appendix two text goes here.
 \fi
 
 
-The author would like to thank Professor Alan Peters for his guidance in project selection and development and for suggestions for this paper.
+The author would like to thank Professor Richard Alan Peters II for his guidance in project selection and development and for suggestions for this paper.
 
 \ifCLASSOPTIONcaptionsoff
   \newpage
