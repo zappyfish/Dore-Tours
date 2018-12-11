@@ -49,6 +49,8 @@ public class PoseManager implements SensorEventListener {
         mCallbacks.add(callback);
     }
 
+    public void removeCallback(PoseCallback callback) { mCallbacks.remove(callback); }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Do something here if sensor accuracy changes.

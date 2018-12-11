@@ -20,20 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.liamkelly.doretours.data.location.Building;
+import com.example.liamkelly.doretours.data.location.Campus;
+import com.example.liamkelly.doretours.data.location.CampusManager;
+import com.example.liamkelly.doretours.data.location.HardcodedBuilding;
 import com.example.liamkelly.doretours.data.location.GPSFragment;
 import com.example.liamkelly.doretours.data.location.GPSManager;
-import com.example.liamkelly.doretours.data.location.Vanderbilt;
 import com.example.liamkelly.doretours.data.pose.PoseManager;
 import com.example.liamkelly.doretours.upload.LabeledData;
 import com.example.liamkelly.doretours.upload.UploadManager;
 import com.google.android.cameraview.AspectRatio;
 import com.google.android.cameraview.CameraView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Set;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,6 +87,10 @@ public class TrainingActivity extends AppCompatActivity implements
 
     private double mLastLongitude = -1;
 
+    private boolean mInCampus = false;
+
+    private Campus mCampus;
+
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -110,6 +114,7 @@ public class TrainingActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        mCampus = CampusManager.getInstance().getActiveCampus();
 
         GPSFragment gpsFragment = new GPSFragment();
         getSupportFragmentManager()
@@ -122,18 +127,21 @@ public class TrainingActivity extends AppCompatActivity implements
             mCameraView.addCallback(mCallback);
         }
 
-        String[] buildingNames = new String[Building.values().length + 1];
-        for (int i = 0; i < Building.values().length; i++) {
-            buildingNames[i] = Building.values()[i].getName();
+        String[] buildingNames = new String[mCampus.getBuildings().size() + 1];
+        for (int i = 0; i < mCampus.getBuildings().size(); i++) {
+            buildingNames[i] = mCampus.getBuildings().get(i).getName();
         }
-        buildingNames[Building.values().length] = NOTHING_IDENTIFIED;
+
+        buildingNames[mCampus.getBuildings().size()] = NOTHING_IDENTIFIED;
 
         final Spinner spinner = (Spinner) findViewById(R.id.buildings);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
                 buildingNames);
         spinner.setAdapter(adapter);
 
-        mBuildingSelection = (String)spinner.getItemAtPosition(0);
+        spinner.setSelection(mCampus.getBuildings().size());
+
+        mBuildingSelection = (String)spinner.getItemAtPosition(mCampus.getBuildings().size());
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -150,20 +158,27 @@ public class TrainingActivity extends AppCompatActivity implements
         GPSManager.getInstance(this).addCallback(new GPSManager.Callback() {
             @Override
             public void onData(double latitude, double longitude) {
-                mLastLatitude = latitude;
-                mLastLongitude = longitude;
-                int cnt = 0;
-                for (Building building : Building.values()) {
-                    if (building.inBuilding(latitude, longitude)) {
-                        mBuildingSelection = building.getName();
-                        mInsideBuilding = true;
-                        break;
+                if (CampusManager.getInstance().getActiveCampus().inCampus(latitude, longitude)) {
+                    mInCampus = true;
+                    mLastLatitude = latitude;
+                    mLastLongitude = longitude;
+                    int cnt = 0;
+                    for (Building building : mCampus.getBuildings()) {
+                        if (building.inBuilding(latitude, longitude)) {
+                            mBuildingSelection = building.getName();
+                            mInsideBuilding = true;
+                            break;
+                        }
+                        cnt++;
                     }
-                    cnt++;
+                    if (cnt == mCampus.getBuildings().size()) {
+                        mBuildingSelection = NOTHING_IDENTIFIED;
+                        mInsideBuilding = false;
+                    }
+                    spinner.setSelection(cnt); // The last entry, if we don't hit anything, is "Nothing Identified"
+                } else {
+                    mInCampus = false;
                 }
-                mBuildingSelection = NOTHING_IDENTIFIED;
-                mInsideBuilding = false;
-                spinner.setSelection(cnt); // The last entry, if we don't hit anything, is "Nothing Identified"
             }
         });
 
@@ -172,16 +187,19 @@ public class TrainingActivity extends AppCompatActivity implements
         PoseManager.getInstance(this).addCallback(new PoseManager.PoseCallback() {
             @Override
             public void callback(double northMagnitude, double eastMagnitude, double zAngle) {
-
-                if (!mInsideBuilding && zAngle >= 45.0 && zAngle <= 135) {
-                    Building lookingAt = Building.getBuildingInView(northMagnitude, eastMagnitude, mLastLatitude, mLastLongitude);
-                    if (lookingAt != null) {
-                        mAngleTextView.setText("Looking at: " + lookingAt.getName());
+                if (mInCampus) {
+                    if (!mInsideBuilding && zAngle >= 45.0 && zAngle <= 135) {
+                        Building lookingAt = mCampus.getBuildingInView(northMagnitude, eastMagnitude, mLastLatitude, mLastLongitude);
+                        if (lookingAt != null) {
+                            mAngleTextView.setText("Looking at: " + lookingAt.getName());
+                        } else {
+                            mAngleTextView.setText("Not looking at anything");
+                        }
                     } else {
-                        mAngleTextView.setText("Not looking at anything");
+                        mAngleTextView.setText("Inside building or looking too far up or down");
                     }
                 } else {
-                    mAngleTextView.setText("Inside building or looking too far up or down");
+                    mAngleTextView.setText("Outside " + CampusManager.getInstance().getActiveCampus().getName());
                 }
             }
 

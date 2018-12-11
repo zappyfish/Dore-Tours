@@ -6,12 +6,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.liamkelly.doretours.R;
 
@@ -42,7 +40,7 @@ public class GPSFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextView inVanderbilt;
+    private TextView inCampus;
 
 
     private OnFragmentInteractionListener mListener;
@@ -77,7 +75,7 @@ public class GPSFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        inVanderbilt = (TextView) getActivity().findViewById(R.id.in_vandy);
+        inCampus = (TextView) getActivity().findViewById(R.id.in_vandy);
 
     }
 
@@ -91,19 +89,19 @@ public class GPSFragment extends Fragment {
             GPSManager.getInstance(context).addCallback(new GPSManager.Callback() {
                 @Override
                 public void onData(double latitude, double longitude) {
-                    setInVanderbilt(Vanderbilt.inVanderbilt(latitude, longitude));
+                    setInCampus(CampusManager.getInstance().getActiveCampus().inCampus(latitude, longitude));
                 }
             });
             GPSManager.getInstance(getActivity()).startLocationUpdates();
         }
     }
 
-    private void setInVanderbilt(boolean inside) {
-        if (inVanderbilt != null) {
-            String text = (inside ? "inside" : "outside") + " Vanderbilt";
-            inVanderbilt.setText(text);
+    private void setInCampus(boolean inside) {
+        if (inCampus != null) {
+            String text = (inside ? " Inside " : " Outside ") + CampusManager.getInstance().getActiveCampus().getName();
+            inCampus.setText(text);
             int color = inside ? Color.GREEN : Color.RED;
-            inVanderbilt.setBackgroundColor(color);
+            inCampus.setBackgroundColor(color);
         }
     }
 

@@ -27,6 +27,8 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
     public final static int FAST_LOCATION_FREQUENCY = 5 * 1000;
     public final static int LOCATION_FREQUENCY = 5 * 1000;
     private final List<Callback> mCallbacks;
+    private double mLastLatitude;
+    private double mLastLongitude;
 
     /***********************************************************************************************
      * methods
@@ -55,6 +57,14 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
             mInstance = new GPSManager(context);
         }
         return mInstance;
+    }
+
+    public double getLastLatitude() {
+        return mLastLatitude;
+    }
+
+    public double getLastLongitude() {
+        return mLastLongitude;
     }
 
     ///////////// 1
@@ -160,6 +170,8 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
      **********************************************************************************************/
     @Override
     public void onLocationChanged(Location location) {
+        mLastLatitude = location.getLatitude();
+        mLastLongitude = location.getLongitude();
         if (location != null) {
             // send location in broadcast
             for (Callback callback : mCallbacks) {
@@ -172,9 +184,13 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
         mCallbacks.add(callback);
     }
 
+    public void removeCallback(Callback callback) {
+        mCallbacks.remove(callback);
+    }
+
     public static interface Callback {
 
-        void onData(double latitude, double lonigtude);
+        void onData(double latitude, double longitude);
     }
 
 }
