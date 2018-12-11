@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+                startActivity(new Intent(MainActivity.this, MainAppActivity.class));
             }
         });
 

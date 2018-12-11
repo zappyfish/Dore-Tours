@@ -70,7 +70,6 @@ public class PoseManager implements SensorEventListener {
         }
         updateOrientationAngles();
         for (PoseCallback callback : mCallbacks) {
-            callback.callback(mOrientationAngles[0], mOrientationAngles[2], mOrientationAngles[1]);
             callback.callback(mOrientationVector[0], mOrientationVector[1], mOrientationVector[2]);
         }
     }
@@ -90,9 +89,6 @@ public class PoseManager implements SensorEventListener {
     }
 
     private void computeOrientationVector() {
-        float x = mOrientationAngles[0];
-        float y = mOrientationAngles[2];
-        float z = mOrientationAngles[1];
         mOrientationVector[0] = -mRotationMatrix[5];
         mOrientationVector[1] = -mRotationMatrix[2];
         mOrientationVector[2] = 90 -mRotationMatrix[8] * 90;
@@ -101,7 +97,5 @@ public class PoseManager implements SensorEventListener {
     public interface PoseCallback {
 
         void callback(double northMagnitude, double eastMagnitude, double zAngle);
-
-        void callback(float roll, float pitch, float yaw);
     }
 }

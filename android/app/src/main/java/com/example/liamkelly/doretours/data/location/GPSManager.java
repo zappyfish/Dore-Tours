@@ -29,6 +29,8 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
     private final List<Callback> mCallbacks;
     private double mLastLatitude;
     private double mLastLongitude;
+    private final double[] mPredicted;
+    private final GPSKalmanFilter mKalmanFilter;
 
     /***********************************************************************************************
      * methods
@@ -40,6 +42,8 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
         mContext = context;
         mCallbacks = new ArrayList<>();
         buildGoogleApiClient();
+        mKalmanFilter = new GPSKalmanFilter(2);
+        mPredicted = new double[2];
     }
 
     /**
@@ -172,10 +176,11 @@ public class GPSManager implements GoogleApiClient.ConnectionCallbacks,
     public void onLocationChanged(Location location) {
         mLastLatitude = location.getLatitude();
         mLastLongitude = location.getLongitude();
+        mKalmanFilter.addMeasurement(location, mPredicted);
         if (location != null) {
             // send location in broadcast
             for (Callback callback : mCallbacks) {
-                callback.onData(location.getLatitude(), location.getLongitude());
+                callback.onData(mPredicted[0], mPredicted[1]);
             }
         }
     }

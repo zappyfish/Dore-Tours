@@ -1,5 +1,7 @@
 package com.example.liamkelly.doretours.data.images;
 
+import android.graphics.Bitmap;
+
 public class ImageManager {
 
     private static ImageManager sInstance;

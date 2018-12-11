@@ -91,6 +91,8 @@ public class TrainingActivity extends AppCompatActivity implements
 
     private Campus mCampus;
 
+    private Building mLookingAt;
+
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -191,6 +193,7 @@ public class TrainingActivity extends AppCompatActivity implements
                     if (!mInsideBuilding && zAngle >= 45.0 && zAngle <= 135) {
                         Building lookingAt = mCampus.getBuildingInView(northMagnitude, eastMagnitude, mLastLatitude, mLastLongitude);
                         if (lookingAt != null) {
+                            mLookingAt = lookingAt;
                             mAngleTextView.setText("Looking at: " + lookingAt.getName());
                         } else {
                             mAngleTextView.setText("Not looking at anything");
@@ -346,8 +349,8 @@ public class TrainingActivity extends AppCompatActivity implements
                 public void run() {
                     // upload image here
                     // Compute which building
-                    if (mBuildingSelection != null) {
-                        LabeledData dataPoint = new LabeledData(mBuildingSelection, data);
+                    if (mLookingAt != null) {
+                        LabeledData dataPoint = new LabeledData(mLookingAt.getName(), data);
                         UploadManager.getInstance().uploadDataPoint(dataPoint, TrainingActivity.this);
                     }
                 }
