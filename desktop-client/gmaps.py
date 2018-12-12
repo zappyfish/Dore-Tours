@@ -11,7 +11,7 @@ class GoogleMaps:
     BASE_URL = 'http://maps.google.com/maps/api/staticmap?'
 
     def __init__(self):
-        self.gmaps = googlemaps.Client(key='AIzaSyCOioRVNUprjXD-Puy4PWZUr_6MmTBeL3c')
+        self.gmaps = googlemaps.Client(key='KEY')
         self.zoom = 17
         self.w = 600
         self.h = 600
